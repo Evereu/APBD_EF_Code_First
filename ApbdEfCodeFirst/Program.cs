@@ -1,3 +1,6 @@
+using ApbdEfCodeFirst.Context;
+using Microsoft.EntityFrameworkCore;
+
 namespace ApbdEfCodeFirst
 {
     public class Program
@@ -10,6 +13,10 @@ namespace ApbdEfCodeFirst
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<PharmacyContext>(options => options.UseSqlServer(connectionString));
+
 
             var app = builder.Build();
 
