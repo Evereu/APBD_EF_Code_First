@@ -11,6 +11,14 @@ namespace ApbdEfCodeFirst.Controllers
         public void AddPrescription()
         {
 
+            //Wystawienie nowej recepty
+            // Ma przyjmować nowy model DTO
+            // Jeśli pacjent nie istnieje zwracamy błąd
+            // W recepcie max 10 leków, inaczej zwracamy błąd
+            // DueData >= Date
+
+
+
         }
 
 
