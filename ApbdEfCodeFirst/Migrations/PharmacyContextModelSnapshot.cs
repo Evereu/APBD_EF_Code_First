@@ -25,10 +25,7 @@ namespace ApbdEfCodeFirst.Migrations
             modelBuilder.Entity("ApbdEfCodeFirst.Models.Doctor", b =>
                 {
                     b.Property<int>("IdDoctor")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDoctor"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -81,10 +78,7 @@ namespace ApbdEfCodeFirst.Migrations
             modelBuilder.Entity("ApbdEfCodeFirst.Models.Patient", b =>
                 {
                     b.Property<int>("IdPatient")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPatient"), 1L, 1);
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("Date");
@@ -153,7 +147,7 @@ namespace ApbdEfCodeFirst.Migrations
 
                     b.HasIndex("IdPrescription");
 
-                    b.ToTable("PrescriptionMedicament");
+                    b.ToTable("prescriptionMedicaments");
                 });
 
             modelBuilder.Entity("ApbdEfCodeFirst.Models.Prescription", b =>

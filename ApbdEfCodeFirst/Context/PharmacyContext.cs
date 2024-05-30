@@ -17,6 +17,7 @@ namespace ApbdEfCodeFirst.Context
         public DbSet<Medicament> Medicaments { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<PrescriptionMedicament> PrescriptionMedicaments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,7 +43,16 @@ namespace ApbdEfCodeFirst.Context
                 .WithMany(u => u.prescriptionMedicaments)
                 .HasForeignKey(u => u.IdPrescription);
 
+            //identity off
 
+            modelBuilder.Entity<Patient>()
+                .Property(k => k.IdPatient)
+                .ValueGeneratedNever();
+
+            //identity off
+            modelBuilder.Entity<Doctor>()
+                .Property(k => k.IdDoctor)
+                .ValueGeneratedNever();
 
         }
 

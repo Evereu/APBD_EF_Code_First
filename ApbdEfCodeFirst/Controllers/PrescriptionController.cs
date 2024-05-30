@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApbdEfCodeFirst.DtoModels;
+using ApbdEfCodeFirst.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApbdEfCodeFirst.Controllers
 {
@@ -7,18 +9,21 @@ namespace ApbdEfCodeFirst.Controllers
     public class PrescriptionController : ControllerBase
     {
 
-        [HttpPost]
-        public void AddPrescription()
+        private readonly IPrescriptionService _prescriptionService;
+
+        public PrescriptionController(IPrescriptionService  prescriptionService) 
         {
+            
+            _prescriptionService = prescriptionService;
 
-            //Wystawienie nowej recepty
-            // Ma przyjmować nowy model DTO
-            // Jeśli pacjent nie istnieje zwracamy błąd
-            // W recepcie max 10 leków, inaczej zwracamy błąd
-            // DueData >= Date
+        }
 
+        [HttpPost]
+        public IActionResult AddPrescription(NewPrescription newPrescription)
+        {
+           var abc =  _prescriptionService.AddPrescription(newPrescription);
 
-
+            return Ok(abc);
         }
 
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApbdEfCodeFirst.Migrations
 {
     [DbContext(typeof(PharmacyContext))]
-    [Migration("20240529221740_nullableDose")]
-    partial class nullableDose
+    [Migration("20240530194856_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,10 +27,7 @@ namespace ApbdEfCodeFirst.Migrations
             modelBuilder.Entity("ApbdEfCodeFirst.Models.Doctor", b =>
                 {
                     b.Property<int>("IdDoctor")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDoctor"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -83,10 +80,7 @@ namespace ApbdEfCodeFirst.Migrations
             modelBuilder.Entity("ApbdEfCodeFirst.Models.Patient", b =>
                 {
                     b.Property<int>("IdPatient")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPatient"), 1L, 1);
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("Date");
@@ -117,9 +111,6 @@ namespace ApbdEfCodeFirst.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("Date");
 
-                    b.Property<int?>("DoctorIdDoctor")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("Date");
 
@@ -129,14 +120,11 @@ namespace ApbdEfCodeFirst.Migrations
                     b.Property<int>("IdPatient")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PatientIdPatient")
-                        .HasColumnType("int");
-
                     b.HasKey("IdPrescription");
 
-                    b.HasIndex("DoctorIdDoctor");
+                    b.HasIndex("IdDoctor");
 
-                    b.HasIndex("PatientIdPatient");
+                    b.HasIndex("IdPatient");
 
                     b.ToTable("Prescriptions");
                 });
@@ -161,18 +149,26 @@ namespace ApbdEfCodeFirst.Migrations
 
                     b.HasIndex("IdPrescription");
 
-                    b.ToTable("PrescriptionMedicament");
+                    b.ToTable("prescriptionMedicaments");
                 });
 
             modelBuilder.Entity("ApbdEfCodeFirst.Models.Prescription", b =>
                 {
-                    b.HasOne("ApbdEfCodeFirst.Models.Doctor", null)
+                    b.HasOne("ApbdEfCodeFirst.Models.Doctor", "Doctors")
                         .WithMany("Prescriptions")
-                        .HasForeignKey("DoctorIdDoctor");
+                        .HasForeignKey("IdDoctor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("ApbdEfCodeFirst.Models.Patient", null)
+                    b.HasOne("ApbdEfCodeFirst.Models.Patient", "Patients")
                         .WithMany("Prescriptions")
-                        .HasForeignKey("PatientIdPatient");
+                        .HasForeignKey("IdPatient")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctors");
+
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("ApbdEfCodeFirst.Models.PrescriptionMedicament", b =>

@@ -1,4 +1,5 @@
 using ApbdEfCodeFirst.Context;
+using ApbdEfCodeFirst.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApbdEfCodeFirst
@@ -17,6 +18,9 @@ namespace ApbdEfCodeFirst
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<PharmacyContext>(options => options.UseSqlServer(connectionString));
 
+            builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
+            builder.Services.AddScoped<IPatientService, PatientService>();
+            
 
             var app = builder.Build();
 
