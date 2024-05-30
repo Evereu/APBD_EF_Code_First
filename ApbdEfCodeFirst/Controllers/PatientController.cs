@@ -26,7 +26,5 @@ namespace ApbdEfCodeFirst.Controllers
             return Ok(result);
 
         }
-
-
     }
 }

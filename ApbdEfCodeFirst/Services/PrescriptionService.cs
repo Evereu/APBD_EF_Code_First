@@ -77,10 +77,7 @@ namespace ApbdEfCodeFirst.Services
                 return new BadRequestObjectResult($"Nie istniejące id leków:  {string.Join(", ", missingMedicamentIds)}");
             }
 
-            
-
-
-
+         
             var newPersc = _context.Prescriptions.AddAsync(new Prescription
             {
                 Date = newPrescription.Date,
@@ -91,12 +88,12 @@ namespace ApbdEfCodeFirst.Services
             
             _context.SaveChanges();
 
-            var newPersccc = newPersc.Result.Entity;
+            var lastPrescriptionsId = newPersc.Result.Entity;
 
             var newPerscMedi = newPrescription.Medicament.Select(m => new PrescriptionMedicament
             {
                 IdMedicament = m.IdMedicament,
-                IdPrescription = newPersccc.IdPrescription,
+                IdPrescription = lastPrescriptionsId.IdPrescription,
                 Dose = m.Dose,
                 Details = m.Details,
             }) ;

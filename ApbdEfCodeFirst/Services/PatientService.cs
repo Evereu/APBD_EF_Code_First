@@ -1,5 +1,6 @@
 ﻿using ApbdEfCodeFirst.Context;
 using ApbdEfCodeFirst.DtoModels;
+using ApbdEfCodeFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -18,6 +19,13 @@ namespace ApbdEfCodeFirst.Services
 
         public IActionResult GetPatientData(int patientId)
         {
+
+
+            if (patientId == null)
+            {
+                return new BadRequestObjectResult("id pacjenta jest null");
+            }
+
 
             var result = _context.Prescriptions
                  .Where(p => p.IdPatient == patientId)
@@ -47,13 +55,7 @@ namespace ApbdEfCodeFirst.Services
                          Dose = (int)pp.Dose,
                          Description = pp.Medicament.Description,
                      })
-                 });
-            
-
-
-          
-
-
+                 }).FirstOrDefault();
             return new OkObjectResult(result);
 
         }
