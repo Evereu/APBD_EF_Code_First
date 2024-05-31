@@ -22,7 +22,7 @@ namespace ApbdEfCodeFirst.Services
 
             if (patient == null)
             {
-                _context.Patients.AddAsync(new Patient
+                _context.Patients.Add(new Patient
                 {
                     IdPatient = newPrescription.Patient.IdPatient,
                     FirstName = newPrescription.Patient.FirstName,
@@ -38,7 +38,7 @@ namespace ApbdEfCodeFirst.Services
 
             if (doctor == null)
             {
-                _context.Doctors.AddAsync(new Doctor
+                _context.Doctors.Add(new Doctor
                 {
                     IdDoctor = newPrescription.Doctor.IdDoctor,
                     FirstName = newPrescription.Doctor.FirstName,
@@ -78,7 +78,7 @@ namespace ApbdEfCodeFirst.Services
             }
 
          
-            var newPersc = _context.Prescriptions.AddAsync(new Prescription
+            var newPersc = _context.Prescriptions.Add(new Prescription
             {
                 Date = newPrescription.Date,
                 DueDate = newPrescription.DueDate,
@@ -88,7 +88,7 @@ namespace ApbdEfCodeFirst.Services
             
             _context.SaveChanges();
 
-            var lastPrescriptionsId = newPersc.Result.Entity;
+            var lastPrescriptionsId = newPersc.Entity;
 
             var newPerscMedi = newPrescription.Medicament.Select(m => new PrescriptionMedicament
             {
@@ -96,7 +96,7 @@ namespace ApbdEfCodeFirst.Services
                 IdPrescription = lastPrescriptionsId.IdPrescription,
                 Dose = m.Dose,
                 Details = m.Details,
-            }) ;
+            });
 
             _context.AddRange(newPerscMedi);
 
